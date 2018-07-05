@@ -29,7 +29,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class EarthquakeActivity extends AppCompatActivity {
+public class EarthquakeActivity extends AppCompatActivity implements FetchDataCallbackInterface {
 
     public static final String LOG_TAG = EarthquakeActivity.class.getName();
 
@@ -39,10 +39,14 @@ public class EarthquakeActivity extends AppCompatActivity {
         setContentView(R.layout.earthquake_activity);
 
         //pulls the earthquake info from the usgs
-        new RetrieveEarthquake().execute();
+        new RetrieveEarthquake(this).execute();
 
-        // Create a fake list of earthquake locations.
-        ArrayList<EarthquakeClass> earthquakes = QueryUtils.extractEarthquakes();
+    }
+
+    @Override
+    public void fetchCallback(String result) {
+        // Create a list of earthquake locations.
+        ArrayList<EarthquakeClass> earthquakes = QueryUtils.extractEarthquakes(result);
 
         // Find a reference to the {@link ListView} in the layout
         final ListView earthquakeListView = (ListView) findViewById(R.id.list);
