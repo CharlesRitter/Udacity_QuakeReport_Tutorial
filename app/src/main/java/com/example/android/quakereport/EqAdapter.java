@@ -55,7 +55,7 @@ public class EqAdapter extends ArrayAdapter<EarthquakeClass> {
             offsetView.setText(offset);
             locView.setText(loc);
         } else {
-            offsetView.setText("Near the");
+            offsetView.setText("In or near");
             locView.setText(unformattedLoc);
         }
 
