@@ -9,14 +9,12 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class RetrieveEarthquake extends AsyncTask<Void, Void, String> {
+public class RetrieveEarthquake extends AsyncTask<String, Void, String> {
     /*
     Retrieves the data from the usgs API instead of using the placeholder JSON file provided
     in the udacity tutorial
      */
 
-    //the url that contains the usgs earthquake information
-    private String stringUrl = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2014-01-01&endtime=2014-01-02";
     //our main activity which implements the interface and where the data will be used
     FetchDataCallbackInterface callbackInterface;
 
@@ -24,11 +22,16 @@ public class RetrieveEarthquake extends AsyncTask<Void, Void, String> {
         callbackInterface = callback;
     }
 
-    protected String doInBackground(Void... urls){
+    protected String doInBackground(String... urls){
 
         try {
+            //check to see if the function was called correctly
+            if(urls.length != 1 || urls == null){
+                return null;
+            }
+
             //open a connection with the website
-            URL queryUrl = new URL(stringUrl);
+            URL queryUrl = new URL(urls[0]);
             HttpURLConnection usgsConnection = (HttpURLConnection) queryUrl.openConnection();
             try{
 
@@ -60,7 +63,12 @@ public class RetrieveEarthquake extends AsyncTask<Void, Void, String> {
     }
 
     protected void onPostExecute(String usgsJSON){
-        //send the data back to the main activit
+        //do nothing if doInBackground returned null
+        if(usgsJSON == null){
+            return;
+        }
+
+        //send the data back to the main activity
         this.callbackInterface.fetchCallback(usgsJSON);
     }
 }

@@ -30,6 +30,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class EarthquakeActivity extends AppCompatActivity implements FetchDataCallbackInterface {
+    private final String USGS_URL =
+            "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&eventtype=earthquake&orderby=time&minmag=6&limit=10";
 
     public static final String LOG_TAG = EarthquakeActivity.class.getName();
 
@@ -39,7 +41,7 @@ public class EarthquakeActivity extends AppCompatActivity implements FetchDataCa
         setContentView(R.layout.earthquake_activity);
 
         //pulls the earthquake info from the usgs
-        new RetrieveEarthquake(this).execute();
+        new RetrieveEarthquake(this).execute(USGS_URL);
 
     }
 
