@@ -42,10 +42,14 @@ public class EarthquakeActivity extends AppCompatActivity{
 
     public static final String LOG_TAG = EarthquakeActivity.class.getName();
 
+    private TextView emptyStateTextView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.earthquake_activity);
+
+        emptyStateTextView = findViewById(R.id.empty_view);
 
         EarthquakeModel model = ViewModelProviders.of(this).get(EarthquakeModel.class);
 
@@ -57,6 +61,7 @@ public class EarthquakeActivity extends AppCompatActivity{
 
             // Find a reference to the {@link ListView} in the layout
             final ListView earthquakeListView = findViewById(R.id.list);
+            earthquakeListView.setEmptyView(emptyStateTextView);
 
             // Create a new {@link ArrayAdapter} of earthquakes
             EqAdapter adapter = new EqAdapter(this, earthquakes);
@@ -64,6 +69,9 @@ public class EarthquakeActivity extends AppCompatActivity{
             // Set the adapter on the {@link ListView}
             // so the list can be populated in the user interface
             earthquakeListView.setAdapter(adapter);
+
+            //fills the empty view
+            emptyStateTextView.setText(R.string.no_earthquakes);
 
             //Set the click listener for the list items
             //TODO figure out how lambda functions work
