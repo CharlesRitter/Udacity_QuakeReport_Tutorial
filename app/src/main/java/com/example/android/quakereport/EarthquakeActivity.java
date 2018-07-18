@@ -50,6 +50,8 @@ public class EarthquakeActivity extends AppCompatActivity{
         setContentView(R.layout.earthquake_activity);
 
         emptyStateTextView = findViewById(R.id.empty_view);
+        //fills the empty view
+        emptyStateTextView.setText(R.string.no_earthquakes);
 
         EarthquakeModel model = ViewModelProviders.of(this).get(EarthquakeModel.class);
 
@@ -70,9 +72,6 @@ public class EarthquakeActivity extends AppCompatActivity{
             // so the list can be populated in the user interface
             earthquakeListView.setAdapter(adapter);
 
-            //fills the empty view
-            emptyStateTextView.setText(R.string.no_earthquakes);
-
             //Set the click listener for the list items
             //TODO figure out how lambda functions work
             earthquakeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -85,8 +84,11 @@ public class EarthquakeActivity extends AppCompatActivity{
                     startActivity(openUrl);
                 }
             });
-        });
 
+
+        });
+        //set the loading indicator to disappear
+        findViewById(R.id.loading_spinner).setVisibility(View.GONE);
     }
 
 }
