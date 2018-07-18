@@ -2,6 +2,7 @@ package com.example.android.quakereport;
 
 import android.app.Activity;
 import android.graphics.drawable.GradientDrawable;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,16 +14,18 @@ import org.w3c.dom.Text;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class EqAdapter extends ArrayAdapter<EarthquakeClass> {
 
-    public EqAdapter(Activity context, ArrayList<EarthquakeClass> eqList){
+    EqAdapter(Activity context, List<EarthquakeClass> eqList){
         super(context, 0, eqList);
     }
 
+    @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent){
+    public View getView(int position, View convertView, @NonNull ViewGroup parent){
         View listItemView = convertView;
         if(listItemView == null) {
             listItemView = LayoutInflater.from(getContext()).inflate(
@@ -32,7 +35,7 @@ public class EqAdapter extends ArrayAdapter<EarthquakeClass> {
         EarthquakeClass currentItem = getItem(position);
 
         //Print the magnitude of the quake
-        TextView magnitudeView = (TextView) listItemView.findViewById(R.id.magnitude);
+        TextView magnitudeView = listItemView.findViewById(R.id.magnitude);
         DecimalFormat dblStr = new DecimalFormat("0.0");
         magnitudeView.setText(dblStr.format(currentItem.getMagnitude()));
         //set the background color for the magnitude
@@ -41,8 +44,8 @@ public class EqAdapter extends ArrayAdapter<EarthquakeClass> {
         magnitudeCircle.setColor(magnitudeColor);
 
         //Print the location of the quake
-        TextView offsetView= (TextView) listItemView.findViewById(R.id.offset);
-        TextView locView = (TextView) listItemView.findViewById(R.id.location);
+        TextView offsetView= listItemView.findViewById(R.id.offset);
+        TextView locView = listItemView.findViewById(R.id.location);
 
         String unformattedLoc = currentItem.getLoc();
         //there are two different formats for the "name" string and so there are two
@@ -55,16 +58,16 @@ public class EqAdapter extends ArrayAdapter<EarthquakeClass> {
             offsetView.setText(offset);
             locView.setText(loc);
         } else {
-            offsetView.setText("In or near");
+            offsetView.setText(R.string.no_offset);
             locView.setText(unformattedLoc);
         }
 
         //print the date of the quake
-        TextView dateView = (TextView) listItemView.findViewById(R.id.date);
+        TextView dateView = listItemView.findViewById(R.id.date);
         dateView.setText(currentItem.getDate());
 
         //print the time of the quake
-        TextView timeView = (TextView) listItemView.findViewById(R.id.time);
+        TextView timeView = listItemView.findViewById(R.id.time);
         timeView.setText(currentItem.getTime());
 
         return(listItemView);
