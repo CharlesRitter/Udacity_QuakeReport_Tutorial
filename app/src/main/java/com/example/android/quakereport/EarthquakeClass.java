@@ -32,7 +32,7 @@ public class EarthquakeClass {
 
     public String getDate(){
         Date unixDate = new Date(unixTime);
-        SimpleDateFormat fmtStr = new SimpleDateFormat("MMM DD, yyyy");
+        SimpleDateFormat fmtStr = new SimpleDateFormat("MMM dd, yyyy");
         String date = fmtStr.format(unixDate);
 
         return date;
